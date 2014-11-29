@@ -46,6 +46,12 @@
   <ItemGroup>
     <Compile Include="Event.cs" />
     <Compile Include="Mailout.cs" />
+    <Compile Include="NewSection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewSection.Designer.cs">
+      <DependentUpon>NewSection.cs</DependentUpon>
+    </Compile>
     <Compile Include="Section.cs" />
     <Compile Include="EventImage.cs" />
     <Compile Include="MainWindow.cs">

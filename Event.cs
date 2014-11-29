@@ -16,12 +16,13 @@ namespace MailoutMaker
         public ArrayList detailParagraphs;
         public EventImage eventImage;
 
-        public Event(String name, String date, String location, String time)
+        public Event(String name, String date, String location, String time, String imgUrl, String imgAlt)
         {
             this.name = name;
             this.date = date;
             this.location = location;
             this.time = time;
+            this.eventImage = new EventImage(imgUrl, imgAlt);
             detailParagraphs = new ArrayList();
         }
 

@@ -10,36 +10,80 @@ using System.Windows.Forms;
 
 namespace MailoutMaker
 {
-    public partial class MainWindow : Form
-    {
+    public partial class MainWindow : Form {
+    
+        Mailout mailout;
+        Dictionary<TreeNode, Object> nodeToComponent;
+        TreeNode mailoutNode;
+
         public MainWindow()
         {
             InitializeComponent();
-            Mailout test = new Mailout("Hey everyone,", "Here is this weeks's AMC mailout!!! with images!!! #fancy", "Thanks for reading!<br><br>~Matthemily");
+            nodeToComponent = new Dictionary<TreeNode, Object>();
+            mailout = new Mailout("greeting", "introduction", "signature");
+            mailoutNode = new TreeNode("Mailout");
+            mailoutNode.ContextMenuStrip = mailoutMenu;
+            nodeToComponent.Add(mailoutNode, mailout);
+            mailoutComponents.Nodes.Add(mailoutNode);
 
-            Section one = new Section("This Week");
-            Section two = new Section("Next Week");
+            addSection("General Meeting");
 
-            Event meeting = new Event("General Meeting: Sponsored by Jobs2Careers", "12/9/14", "GDC 6.302", "7:00PM - 8:00PM");
-            meeting.detailParagraphs.Add("Come and join us at the weekly meeting. Hear about what we did last week and more specifics about what's to come this week and in the near future. In addition, Jobs2Careers will be there to talk about their company and opportunities they have for both <b>full time</b> and <b>internship</b> positions! There will also be <b>Noodles and Co.</b> for all who come!!! Make sure to bring resumes if you are interested in working at Jobs2Careers, as I'm sure they will want to take them.");
-            meeting.eventImage = new EventImage("http://nrn.com/site-files/nrn.com/files/imagecache/medium_img/uploads/2008/12/noodlescospaghettimeatballs.jpg", "noodles&co");
+            Dictionary<String, String> properties = new Dictionary<String, String>();
+            properties.Add("name", "LAN Party");
+            properties.Add("date", "12/3/14");
+            properties.Add("location", "GDC 6.302");
+            properties.Add("time", "7:00PM-7:00AM");
+            properties.Add("imgUrl", "http://nrn.com/site-files/nrn.com/files/imagecache/medium_img/uploads/2008/12/noodlescospaghettimeatballs.jpg");
+            properties.Add("imgAlt", "oops");
 
-            one.events.Add(meeting);
-            one.events.Add(meeting);
+            addEvent(mailoutComponents.Nodes[0].Nodes[0], properties);
 
-            two.events.Add(meeting);
-            two.events.Add(meeting);
+        }
 
-            test.sections.Add(one);
-            test.sections.Add(two);
+        public void addSection(String name)
+        {
+            // create the section
+            Section temp = new Section(name);
+            mailout.sections.Add(temp);
 
-            mailoutPreview.DocumentText = test.ToString();
+            // create corresponding node
+            TreeNode tempSectionNode = new TreeNode(temp.name);
+            tempSectionNode.ContextMenuStrip = sectionMenu;
+            mailoutNode.Nodes.Add(tempSectionNode);
 
-            TreeNode[] oneArray = new TreeNode[] { new TreeNode("General Meeting"), new TreeNode("General Meeting") };
-            TreeNode[] twoArray = new TreeNode[] { new TreeNode("General Meeting"), new TreeNode("General Meeting") };
+            nodeToComponent.Add(tempSectionNode, temp);
+        }
 
-            TreeNode[] sections = new TreeNode[] { new TreeNode("This Week", oneArray), new TreeNode("Next Week", twoArray) };
-            mailoutComponents.Nodes.Add(new TreeNode("Mailout", sections));
+        public void addEvent(TreeNode parent, Dictionary<String, String> properties)
+        {
+            // create the event
+            Event temp = new Event(properties["name"],
+                                    properties["date"],
+                                    properties["location"],
+                                    properties["time"],
+                                    properties["imgUrl"],
+                                    properties["imgAlt"]);
+            (nodeToComponent[parent] as Section).events.Add(temp);
+
+            // creat corresponding node
+            TreeNode tempEventNode = new TreeNode(temp.name);
+            tempEventNode.ContextMenuStrip = eventMenu;
+            parent.Nodes.Add(tempEventNode);
+
+            nodeToComponent.Add(tempEventNode, temp);
+        }
+
+        private void mailoutComponents_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                mailoutComponents.SelectedNode.ContextMenuStrip.Show();
+            }
+        }
+
+        private void refreshPrviewStrip_Click(object sender, EventArgs e)
+        {
+            mailoutPreview.DocumentText = mailout.ToString();
         }
     }
 }
