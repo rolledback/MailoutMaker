@@ -11,13 +11,15 @@ namespace MailoutMaker
     {
         public String greeting;
         public String introduction;
+        public String ending;
         public String signature;
         public ArrayList sections;
 
-        public Mailout(String greeting, String introduction, String signature)
+        public Mailout(String greeting, String introduction, String ending, String signature)
         {
             this.greeting = greeting;
             this.introduction = introduction;
+            this.ending = ending;
             this.signature = signature;
             sections = new ArrayList();
         }
@@ -35,7 +37,7 @@ namespace MailoutMaker
                 mailout += s;
             }
 
-            mailout += "\n<br>\n<br>\n" + signature;
+            mailout += "\n<br>\n<br>\n" + ending + "\n<br>\n<br>\n" + signature;
 
             return mailout;
         }

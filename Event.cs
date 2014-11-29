@@ -13,26 +13,23 @@ namespace MailoutMaker
         public String date;
         public String location;
         public String time;
-        public ArrayList detailParagraphs;
+        public String detailParagraph;
         public EventImage eventImage;
 
-        public Event(String name, String date, String location, String time, String imgUrl, String imgAlt)
+        public Event(String name, String date, String location, String time, String imgUrl, String description)
         {
             this.name = name;
             this.date = date;
             this.location = location;
             this.time = time;
-            this.eventImage = new EventImage(imgUrl, imgAlt);
-            detailParagraphs = new ArrayList();
+            this.eventImage = new EventImage(imgUrl, "oops");
+            detailParagraph = description;
         }
 
         public override String ToString()
         {
             String eventString = "<h3>" + name + "</h3>\n";
-            foreach(String p in detailParagraphs)
-            {
-                eventString += "<p>" + p + "</p>\n";
-            }
+            eventString += "<p>" + detailParagraph + "</p>\n";
             eventString += "\n";
             eventString += "<ul>\n";
             eventString += "\t<li>Date: " + date + "</li>\n";

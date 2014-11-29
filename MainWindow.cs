@@ -20,13 +20,13 @@ namespace MailoutMaker
         {
             InitializeComponent();
             nodeToComponent = new Dictionary<TreeNode, Object>();
-            mailout = new Mailout("greeting", "introduction", "signature");
+            mailout = new Mailout("Hey everyone,", "Here is this weeks's AMC mailout!!! with images!!! #fancy", "Thanks for reading!", "~Matthemily");
             mailoutNode = new TreeNode("Mailout");
             mailoutNode.ContextMenuStrip = mailoutMenu;
             nodeToComponent.Add(mailoutNode, mailout);
             mailoutComponents.Nodes.Add(mailoutNode);
 
-            addSection("General Meeting");
+            addSection("This Week");
 
             Dictionary<String, String> properties = new Dictionary<String, String>();
             properties.Add("name", "LAN Party");
@@ -34,7 +34,7 @@ namespace MailoutMaker
             properties.Add("location", "GDC 6.302");
             properties.Add("time", "7:00PM-7:00AM");
             properties.Add("imgUrl", "http://nrn.com/site-files/nrn.com/files/imagecache/medium_img/uploads/2008/12/noodlescospaghettimeatballs.jpg");
-            properties.Add("imgAlt", "oops");
+            properties.Add("description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
 
             addEvent(mailoutComponents.Nodes[0].Nodes[0], properties);
 
@@ -62,7 +62,7 @@ namespace MailoutMaker
                                     properties["location"],
                                     properties["time"],
                                     properties["imgUrl"],
-                                    properties["imgAlt"]);
+                                    properties["description"]);
             (nodeToComponent[parent] as Section).events.Add(temp);
 
             // creat corresponding node
@@ -84,6 +84,37 @@ namespace MailoutMaker
         private void refreshPrviewStrip_Click(object sender, EventArgs e)
         {
             mailoutPreview.DocumentText = mailout.ToString();
+        }
+
+        private void newSectionStrip_Click(object sender, EventArgs e)
+        {
+            String newName ="";
+            NewSection newSectionDialog = new NewSection();
+            newSectionDialog.ShowDialog();
+            if (newSectionDialog.result)
+            {
+                newName = newSectionDialog.sectionName.Text;
+                addSection(newName);
+                mailoutPreview.DocumentText = mailout.ToString();
+            }
+        }
+
+        private void newEventStrip_Click(object sender, EventArgs e)
+        {
+            NewEvent newEventDialog = new NewEvent();
+            newEventDialog.ShowDialog();
+            if (newEventDialog.result)
+            {
+                Dictionary<String, String> properties = new Dictionary<String, String>();
+                properties.Add("name", newEventDialog.eventName.Text);
+                properties.Add("date", newEventDialog.eventDate.Text);
+                properties.Add("location", newEventDialog.eventLocation.Text);
+                properties.Add("time", newEventDialog.eventTime.Text);
+                properties.Add("imgUrl", newEventDialog.eventImageUrl.Text);
+                properties.Add("description", newEventDialog.description.Text);
+                addEvent(mailoutComponents.SelectedNode, properties);
+                mailoutPreview.DocumentText = mailout.ToString();
+            }
         }
     }
 }

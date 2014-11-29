@@ -10,13 +10,18 @@ using System.Windows.Forms;
 
 namespace MailoutMaker
 {
-    public partial class NewSection : Form
+    public partial class NewEvent : Form
     {
         public bool result;
 
-        public NewSection()
+        public NewEvent()
         {
             InitializeComponent();
+        }
+
+        private void NewEvent_Load(object sender, EventArgs e)
+        {
+
         }
 
         private void okButton_Click(object sender, EventArgs e)
