@@ -18,7 +18,10 @@ namespace MailoutMaker
         }
         public override String ToString()
         {
-            return "<img src=\"" + imagePath + "\" alt=\"" + altText + "\">\n\n";
+            if (imagePath != "")
+                return "<img src=\"" + imagePath + "\" alt=\"" + altText + "\">\n\n";
+            else
+                return "";
         }
     }
 }

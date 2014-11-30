@@ -42,7 +42,7 @@ namespace MailoutMaker
                     eventString += "\t<li>Time: " + time + "</li>\n";
                 eventString += "</ul>\n\n";
             }
-            if(eventImage != null)
+            if(eventImage != null && eventImage.ToString() != "")
                 eventString += eventImage;
             return eventString;
         }

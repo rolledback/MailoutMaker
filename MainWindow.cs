@@ -20,6 +20,8 @@ namespace MailoutMaker
         public MainWindow()
         {
             InitializeComponent();
+            mailoutComponents.NodeMouseClick += (sender, args) => mailoutComponents.SelectedNode = args.Node;
+
             nodeToComponent = new Dictionary<TreeNode, Object>();
             mailout = new Mailout("Hey everyone,", "Here is this weeks's AMC mailout!!! with images!!! #fancy", "Thanks for reading!", "~Matthemily");
             mailoutNode = new TreeNode("Mailout");
@@ -38,7 +40,7 @@ namespace MailoutMaker
             properties.Add("description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
 
             addEvent(mailoutComponents.Nodes[0].Nodes[0], properties);
-
+            mailoutPreview.DocumentText = mailout.ToString();
         }
 
         public void addSection(String name)
@@ -204,6 +206,102 @@ namespace MailoutMaker
 
         private void refreshPreviewWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            mailoutPreview.DocumentText = mailout.ToString();
+        }
+
+        private void deleteSectionStrip_Click(object sender, EventArgs e)
+        {
+            TreeNode selected = mailoutComponents.SelectedNode;
+            Section thisSection = nodeToComponent[selected] as Section;
+            mailoutComponents.Nodes.Remove(selected);
+            if (thisSection != null)
+            {
+                mailout.sections.Remove(thisSection);
+            }
+            mailoutPreview.DocumentText = mailout.ToString();
+        }
+
+        private void deleteEventStrip_Click(object sender, EventArgs e)
+        {
+            TreeNode selected = mailoutComponents.SelectedNode;
+            Section parentSection = nodeToComponent[selected.Parent] as Section;
+            Event thisEvent = nodeToComponent[selected] as Event;
+            mailoutComponents.Nodes.Remove(selected);
+            if (parentSection != null && thisEvent != null)
+            {
+                parentSection.events.Remove(thisEvent);
+            }
+            mailoutPreview.DocumentText = mailout.ToString();
+        }
+
+        private void blankMailoutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NewMailout newMailoutDialog = new NewMailout();
+            if (newMailoutDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                mailoutComponents.Nodes.Clear();
+                nodeToComponent.Clear();
+                mailout = new Mailout(newMailoutDialog.mailoutGreeting.Text,
+                                        newMailoutDialog.mailoutIntroduction.Text,
+                                        newMailoutDialog.mailoutEnding.Text,
+                                        newMailoutDialog.mailoutSignature.Text);
+                mailoutNode = new TreeNode("Mailout");
+                mailoutNode.ContextMenuStrip = mailoutMenu;
+                nodeToComponent.Add(mailoutNode, mailout);
+                mailoutComponents.Nodes.Add(mailoutNode);
+                mailoutPreview.DocumentText = mailout.ToString();
+            }
+        }
+
+        private void standardTemplateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mailoutComponents.Nodes.Clear();
+            nodeToComponent.Clear();
+
+            mailout = new Mailout("Hey everyone,", "Here is this weeks's AMC mailout!!! with images!!! #fancy", "Thanks for reading!", "~Matthemily");
+            mailoutNode = new TreeNode("Mailout");
+            mailoutNode.ContextMenuStrip = mailoutMenu;
+            nodeToComponent.Add(mailoutNode, mailout);
+            mailoutComponents.Nodes.Add(mailoutNode);
+
+            addSection("This Week");
+
+            Dictionary<String, String> properties = new Dictionary<String, String>();
+            properties.Add("name", "General Meeting Sponsored By _______________");
+            properties.Add("date", "12/3/14");
+            properties.Add("location", "GDC 4.302");
+            properties.Add("time", "7:00PM-8:00PM");
+            properties.Add("imgUrl", "http://nrn.com/site-files/nrn.com/files/imagecache/medium_img/uploads/2008/12/noodlescospaghettimeatballs.jpg");
+            properties.Add("description", "Come and join us at the weekly meeting. Hear about what we did last week and more specifics about what's to come this week and in the near future. This weeks sponsor, _______________, will also be there to talk about who they are and of course take your resumes. There will also be free _______________!. ");
+            addEvent(mailoutComponents.Nodes[0].Nodes[0], properties);
+
+            properties["name"]= "Social Event Sponsored By _______________";
+            properties["date"] = "12/3/14";
+            properties["location"] = "GDC 6.302";
+            properties["time"] = "6:00PM-10:00PM";
+            properties["imgUrl"] = "http://www.pizzamarket.net/images/pizza2.jpg";
+            properties["description"] = "SOCIAL EVENT DESCRIPTION";
+            addEvent(mailoutComponents.Nodes[0].Nodes[0], properties);
+            mailoutPreview.DocumentText = mailout.ToString();
+
+            addSection("Next Week");
+
+            properties["name"] = "General Meeting Sponsored By _______________";
+            properties["date"] = "12/3/14";
+            properties["location"] = "GDC 4.302";
+            properties["time"] = "7:00PM-8:00PM";
+            properties["imgUrl"] = "http://nrn.com/site-files/nrn.com/files/imagecache/medium_img/uploads/2008/12/noodlescospaghettimeatballs.jpg";
+            properties["description"] = "Come and join us at the weekly meeting. Hear about what we did last week and more specifics about what's to come this week and in the near future. This weeks sponsor, _______________, will also be there to talk about who they are and of course take your resumes. There will also be free _______________!. ";
+            addEvent(mailoutComponents.Nodes[0].Nodes[1], properties);
+            mailoutPreview.DocumentText = mailout.ToString();
+
+            properties["name"] = "Social Event Sponsored By _______________";
+            properties["date"] = "12/3/14";
+            properties["location"] = "GDC 6.302";
+            properties["time"] = "6:00PM-10:00PM";
+            properties["imgUrl"] = "http://www.pizzamarket.net/images/pizza2.jpg";
+            properties["description"] = "SOCIAL EVENT DESCRIPTION";
+            addEvent(mailoutComponents.Nodes[0].Nodes[1], properties);
             mailoutPreview.DocumentText = mailout.ToString();
         }
     }
