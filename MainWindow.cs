@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -77,7 +78,11 @@ namespace MailoutMaker
         {
             if (e.Button == MouseButtons.Right)
             {
-                mailoutComponents.SelectedNode.ContextMenuStrip.Show();
+                try
+                {
+                    mailoutComponents.SelectedNode.ContextMenuStrip.Show();
+                }
+                catch (Exception exception) { }
             }
         }
 
@@ -90,8 +95,8 @@ namespace MailoutMaker
         {
             String newName ="";
             NewSection newSectionDialog = new NewSection();
-            newSectionDialog.ShowDialog();
-            if (newSectionDialog.result)
+            ;
+            if (newSectionDialog.ShowDialog(this) == DialogResult.OK)
             {
                 newName = newSectionDialog.sectionName.Text;
                 addSection(newName);
@@ -102,8 +107,7 @@ namespace MailoutMaker
         private void newEventStrip_Click(object sender, EventArgs e)
         {
             NewEvent newEventDialog = new NewEvent();
-            newEventDialog.ShowDialog();
-            if (newEventDialog.result)
+            if (newEventDialog.ShowDialog(this) == DialogResult.OK)
             {
                 Dictionary<String, String> properties = new Dictionary<String, String>();
                 properties.Add("name", newEventDialog.eventName.Text);
@@ -111,10 +115,96 @@ namespace MailoutMaker
                 properties.Add("location", newEventDialog.eventLocation.Text);
                 properties.Add("time", newEventDialog.eventTime.Text);
                 properties.Add("imgUrl", newEventDialog.eventImageUrl.Text);
-                properties.Add("description", newEventDialog.description.Text);
+                properties.Add("description", newEventDialog.eventDescription.Text);
                 addEvent(mailoutComponents.SelectedNode, properties);
                 mailoutPreview.DocumentText = mailout.ToString();
             }
+        }
+
+        private void saveMailoutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveMailoutDialog.Filter = "HTML File|*.html";
+            saveMailoutDialog.ShowDialog();
+        }
+
+        private void saveMailoutDialog_FileOk(object sender, CancelEventArgs e)
+        {
+            string name = saveMailoutDialog.FileName;
+            File.WriteAllText(name, mailout.ToString());
+        }
+
+        private void editSectionStrip_Click(object sender, EventArgs e)
+        {
+            String newName = "";
+            Section correspondingSection = nodeToComponent[mailoutComponents.SelectedNode] as Section;
+            if (correspondingSection == null)
+                return;
+            NewSection newSectionDialog = new NewSection();
+                           
+            newSectionDialog.Text = "Edit Section";
+            newSectionDialog.sectionName.Text = correspondingSection.name;
+
+            if (newSectionDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                newName = newSectionDialog.sectionName.Text;
+                correspondingSection.name = newName;
+                mailoutComponents.SelectedNode.Text = newName;
+                mailoutPreview.DocumentText = mailout.ToString();
+            }
+        }
+
+        private void editEventStrip_Click(object sender, EventArgs e)
+        {
+            Event correspondingEvent = nodeToComponent[mailoutComponents.SelectedNode] as Event;
+            if (correspondingEvent == null)
+                return;
+            NewEvent newEventDialog = new NewEvent();
+            
+            newEventDialog.Text = "Edit Event";
+            newEventDialog.eventName.Text = correspondingEvent.name;
+            newEventDialog.eventDate.Text = correspondingEvent.date;
+            newEventDialog.eventLocation.Text = correspondingEvent.location;
+            newEventDialog.eventTime.Text = correspondingEvent.time;
+            newEventDialog.eventImageUrl.Text = correspondingEvent.eventImage.imagePath;
+            newEventDialog.eventDescription.Text = correspondingEvent.description;
+
+            if (newEventDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                Dictionary<String, String> properties = new Dictionary<String, String>();
+                correspondingEvent.name = newEventDialog.eventName.Text;
+                correspondingEvent.date = newEventDialog.eventDate.Text;
+                correspondingEvent.location = newEventDialog.eventLocation.Text;
+                correspondingEvent.time = newEventDialog.eventTime.Text;
+                correspondingEvent.eventImage.imagePath = newEventDialog.eventImageUrl.Text;
+                correspondingEvent.description = newEventDialog.eventDescription.Text;
+                mailoutComponents.SelectedNode.Text = newEventDialog.eventName.Text;
+                mailoutPreview.DocumentText = mailout.ToString();
+            }
+        }
+
+        private void editMailoutStrip_Click(object sender, EventArgs e)
+        {
+            NewMailout newMailoutDialog = new NewMailout();
+
+            newMailoutDialog.Text = "Edit Mailout";
+            newMailoutDialog.mailoutGreeting.Text = mailout.greeting;
+            newMailoutDialog.mailoutIntroduction.Text = mailout.introduction;
+            newMailoutDialog.mailoutEnding.Text = mailout.ending;
+            newMailoutDialog.mailoutSignature.Text = mailout.signature;
+
+            if (newMailoutDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                mailout.greeting = newMailoutDialog.mailoutGreeting.Text;
+                mailout.introduction = newMailoutDialog.mailoutIntroduction.Text;
+                mailout.ending = newMailoutDialog.mailoutEnding.Text;
+                mailout.signature = newMailoutDialog.mailoutSignature.Text;
+                mailoutPreview.DocumentText = mailout.ToString();
+            }
+        }
+
+        private void refreshPreviewWindowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mailoutPreview.DocumentText = mailout.ToString();
         }
     }
 }

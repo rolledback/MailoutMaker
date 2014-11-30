@@ -52,6 +52,12 @@
     <Compile Include="NewEvent.Designer.cs">
       <DependentUpon>NewEvent.cs</DependentUpon>
     </Compile>
+    <Compile Include="NewMailout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewMailout.Designer.cs">
+      <DependentUpon>NewMailout.cs</DependentUpon>
+    </Compile>
     <Compile Include="NewSection.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,6 +79,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="NewEvent.resx">
       <DependentUpon>NewEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewMailout.resx">
+      <DependentUpon>NewMailout.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NewSection.resx">
       <DependentUpon>NewSection.cs</DependentUpon>

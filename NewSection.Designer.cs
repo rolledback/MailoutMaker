@@ -38,7 +38,7 @@
             // 
             this.nameTextBoxLabel.AutoSize = true;
             this.nameTextBoxLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nameTextBoxLabel.Location = new System.Drawing.Point(12, 9);
+            this.nameTextBoxLabel.Location = new System.Drawing.Point(15, 10);
             this.nameTextBoxLabel.Name = "nameTextBoxLabel";
             this.nameTextBoxLabel.Size = new System.Drawing.Size(88, 15);
             this.nameTextBoxLabel.TabIndex = 0;
@@ -47,14 +47,14 @@
             // sectionName
             // 
             this.sectionName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.sectionName.Location = new System.Drawing.Point(106, 9);
+            this.sectionName.Location = new System.Drawing.Point(106, 10);
             this.sectionName.Name = "sectionName";
             this.sectionName.Size = new System.Drawing.Size(129, 21);
             this.sectionName.TabIndex = 1;
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(44, 39);
+            this.okButton.Location = new System.Drawing.Point(45, 40);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
             this.okButton.TabIndex = 2;
@@ -64,12 +64,13 @@
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(125, 39);
+            this.cancelButton.Location = new System.Drawing.Point(125, 40);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 3;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
             // NewSection
             // 

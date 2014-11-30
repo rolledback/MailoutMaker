@@ -40,7 +40,7 @@
             this.eventTimeTextBoxLabel = new System.Windows.Forms.Label();
             this.cancelButton = new System.Windows.Forms.Button();
             this.okButton = new System.Windows.Forms.Button();
-            this.description = new System.Windows.Forms.TextBox();
+            this.eventDescription = new System.Windows.Forms.TextBox();
             this.descriptionTextBoxLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -136,12 +136,13 @@
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(204, 305);
+            this.cancelButton.Location = new System.Drawing.Point(208, 303);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 11;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
             // okButton
             // 
@@ -153,13 +154,13 @@
             this.okButton.UseVisualStyleBackColor = true;
             this.okButton.Click += new System.EventHandler(this.okButton_Click);
             // 
-            // description
+            // eventDescription
             // 
-            this.description.Location = new System.Drawing.Point(105, 163);
-            this.description.Multiline = true;
-            this.description.Name = "description";
-            this.description.Size = new System.Drawing.Size(295, 134);
-            this.description.TabIndex = 12;
+            this.eventDescription.Location = new System.Drawing.Point(105, 163);
+            this.eventDescription.Multiline = true;
+            this.eventDescription.Name = "eventDescription";
+            this.eventDescription.Size = new System.Drawing.Size(295, 134);
+            this.eventDescription.TabIndex = 12;
             // 
             // descriptionTextBoxLabel
             // 
@@ -177,7 +178,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(412, 338);
             this.Controls.Add(this.descriptionTextBoxLabel);
-            this.Controls.Add(this.description);
+            this.Controls.Add(this.eventDescription);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.eventTime);
@@ -214,7 +215,7 @@
         public System.Windows.Forms.TextBox eventLocation;
         public System.Windows.Forms.TextBox eventImageUrl;
         public System.Windows.Forms.TextBox eventTime;
-        public System.Windows.Forms.TextBox description;
+        public System.Windows.Forms.TextBox eventDescription;
         private System.Windows.Forms.Label descriptionTextBoxLabel;
     }
 }

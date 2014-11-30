@@ -12,7 +12,6 @@ namespace MailoutMaker
 {
     public partial class NewEvent : Form
     {
-        public bool result;
 
         public NewEvent()
         {
@@ -26,7 +25,13 @@ namespace MailoutMaker
 
         private void okButton_Click(object sender, EventArgs e)
         {
-            result = true;
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
     }

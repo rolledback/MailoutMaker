@@ -13,7 +13,7 @@ namespace MailoutMaker
         public String date;
         public String location;
         public String time;
-        public String detailParagraph;
+        public String description;
         public EventImage eventImage;
 
         public Event(String name, String date, String location, String time, String imgUrl, String description)
@@ -23,19 +23,25 @@ namespace MailoutMaker
             this.location = location;
             this.time = time;
             this.eventImage = new EventImage(imgUrl, "oops");
-            detailParagraph = description;
+            this.description = description;
         }
 
         public override String ToString()
         {
             String eventString = "<h3>" + name + "</h3>\n";
-            eventString += "<p>" + detailParagraph + "</p>\n";
+            eventString += "<p>" + description + "</p>\n";
             eventString += "\n";
-            eventString += "<ul>\n";
-            eventString += "\t<li>Date: " + date + "</li>\n";
-            eventString += "\t<li>Location: " + location + "</li>\n";
-            eventString += "\t<li>Time: " + time + "</li>\n";
-            eventString += "</ul>\n\n";
+            if (date != null || location != null || time != null)
+            {
+                eventString += "<ul>\n";
+                if(date != null)
+                    eventString += "\t<li>Date: " + date + "</li>\n";
+                if(location != null)
+                    eventString += "\t<li>Location: " + location + "</li>\n";
+                if(time != null)
+                    eventString += "\t<li>Time: " + time + "</li>\n";
+                eventString += "</ul>\n\n";
+            }
             if(eventImage != null)
                 eventString += eventImage;
             return eventString;

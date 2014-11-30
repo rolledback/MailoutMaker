@@ -36,8 +36,6 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mailoutPreview = new System.Windows.Forms.WebBrowser();
-            this.previewMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.refreshPrviewStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.mailoutComponents = new System.Windows.Forms.TreeView();
             this.mailoutMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editMailoutStrip = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,9 +47,12 @@
             this.eventMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editEventStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteEventStrip = new System.Windows.Forms.ToolStripMenuItem();
-            this.addDescriptionStrip = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveMailoutDialog = new System.Windows.Forms.SaveFileDialog();
+            this.blankMailoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.standardTemplateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.refreshPreviewWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
-            this.previewMenu.SuspendLayout();
             this.mailoutMenu.SuspendLayout();
             this.sectionMenu.SuspendLayout();
             this.eventMenu.SuspendLayout();
@@ -61,6 +62,7 @@
             // 
             this.mainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
+            this.viewToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.mainMenu.Location = new System.Drawing.Point(0, 0);
             this.mainMenu.Name = "mainMenu";
@@ -79,15 +81,19 @@
             // 
             // newMailoutToolStripMenuItem
             // 
+            this.newMailoutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.blankMailoutToolStripMenuItem,
+            this.standardTemplateToolStripMenuItem});
             this.newMailoutToolStripMenuItem.Name = "newMailoutToolStripMenuItem";
-            this.newMailoutToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.newMailoutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.newMailoutToolStripMenuItem.Text = "New Mailout";
             // 
             // saveMailoutToolStripMenuItem
             // 
             this.saveMailoutToolStripMenuItem.Name = "saveMailoutToolStripMenuItem";
-            this.saveMailoutToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.saveMailoutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveMailoutToolStripMenuItem.Text = "Save Mailout";
+            this.saveMailoutToolStripMenuItem.Click += new System.EventHandler(this.saveMailoutToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -105,26 +111,11 @@
             // 
             // mailoutPreview
             // 
-            this.mailoutPreview.ContextMenuStrip = this.previewMenu;
             this.mailoutPreview.Location = new System.Drawing.Point(171, 27);
             this.mailoutPreview.MinimumSize = new System.Drawing.Size(20, 20);
             this.mailoutPreview.Name = "mailoutPreview";
             this.mailoutPreview.Size = new System.Drawing.Size(682, 654);
             this.mailoutPreview.TabIndex = 2;
-            // 
-            // previewMenu
-            // 
-            this.previewMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.refreshPrviewStrip});
-            this.previewMenu.Name = "previewMenu";
-            this.previewMenu.Size = new System.Drawing.Size(114, 26);
-            // 
-            // refreshPrviewStrip
-            // 
-            this.refreshPrviewStrip.Name = "refreshPrviewStrip";
-            this.refreshPrviewStrip.Size = new System.Drawing.Size(113, 22);
-            this.refreshPrviewStrip.Text = "Refresh";
-            this.refreshPrviewStrip.Click += new System.EventHandler(this.refreshPrviewStrip_Click);
             // 
             // mailoutComponents
             // 
@@ -137,16 +128,17 @@
             // mailoutMenu
             // 
             this.mailoutMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.editMailoutStrip,
-            this.newSectionStrip});
+            this.newSectionStrip,
+            this.editMailoutStrip});
             this.mailoutMenu.Name = "mailoutMenu";
             this.mailoutMenu.Size = new System.Drawing.Size(141, 48);
             // 
             // editMailoutStrip
             // 
             this.editMailoutStrip.Name = "editMailoutStrip";
-            this.editMailoutStrip.Size = new System.Drawing.Size(140, 22);
+            this.editMailoutStrip.Size = new System.Drawing.Size(152, 22);
             this.editMailoutStrip.Text = "Edit Mailout";
+            this.editMailoutStrip.Click += new System.EventHandler(this.editMailoutStrip_Click);
             // 
             // newSectionStrip
             // 
@@ -158,8 +150,8 @@
             // sectionMenu
             // 
             this.sectionMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.editSectionStrip,
             this.newEventStrip,
+            this.editSectionStrip,
             this.deleteSectionStrip});
             this.sectionMenu.Name = "sectionMenu";
             this.sectionMenu.Size = new System.Drawing.Size(150, 70);
@@ -167,8 +159,9 @@
             // editSectionStrip
             // 
             this.editSectionStrip.Name = "editSectionStrip";
-            this.editSectionStrip.Size = new System.Drawing.Size(149, 22);
+            this.editSectionStrip.Size = new System.Drawing.Size(152, 22);
             this.editSectionStrip.Text = "Edit Section";
+            this.editSectionStrip.Click += new System.EventHandler(this.editSectionStrip_Click);
             // 
             // newEventStrip
             // 
@@ -187,16 +180,16 @@
             // 
             this.eventMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.editEventStrip,
-            this.addDescriptionStrip,
             this.deleteEventStrip});
             this.eventMenu.Name = "eventMenu";
-            this.eventMenu.Size = new System.Drawing.Size(160, 92);
+            this.eventMenu.Size = new System.Drawing.Size(140, 48);
             // 
             // editEventStrip
             // 
             this.editEventStrip.Name = "editEventStrip";
-            this.editEventStrip.Size = new System.Drawing.Size(159, 22);
+            this.editEventStrip.Size = new System.Drawing.Size(152, 22);
             this.editEventStrip.Text = "Edit Event";
+            this.editEventStrip.Click += new System.EventHandler(this.editEventStrip_Click);
             // 
             // deleteEventStrip
             // 
@@ -204,11 +197,36 @@
             this.deleteEventStrip.Size = new System.Drawing.Size(159, 22);
             this.deleteEventStrip.Text = "Delete Event";
             // 
-            // addDescriptionStrip
+            // saveMailoutDialog
             // 
-            this.addDescriptionStrip.Name = "addDescriptionStrip";
-            this.addDescriptionStrip.Size = new System.Drawing.Size(159, 22);
-            this.addDescriptionStrip.Text = "Add Description";
+            this.saveMailoutDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.saveMailoutDialog_FileOk);
+            // 
+            // blankMailoutToolStripMenuItem
+            // 
+            this.blankMailoutToolStripMenuItem.Name = "blankMailoutToolStripMenuItem";
+            this.blankMailoutToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.blankMailoutToolStripMenuItem.Text = "Blank Mailout";
+            // 
+            // standardTemplateToolStripMenuItem
+            // 
+            this.standardTemplateToolStripMenuItem.Name = "standardTemplateToolStripMenuItem";
+            this.standardTemplateToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.standardTemplateToolStripMenuItem.Text = "Standard Template";
+            // 
+            // viewToolStripMenuItem
+            // 
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.refreshPreviewWindowToolStripMenuItem});
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.viewToolStripMenuItem.Text = "View";
+            // 
+            // refreshPreviewWindowToolStripMenuItem
+            // 
+            this.refreshPreviewWindowToolStripMenuItem.Name = "refreshPreviewWindowToolStripMenuItem";
+            this.refreshPreviewWindowToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.refreshPreviewWindowToolStripMenuItem.Text = "Refresh Preview Window";
+            this.refreshPreviewWindowToolStripMenuItem.Click += new System.EventHandler(this.refreshPreviewWindowToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -225,7 +243,6 @@
             this.Text = "Mailout Maker";
             this.mainMenu.ResumeLayout(false);
             this.mainMenu.PerformLayout();
-            this.previewMenu.ResumeLayout(false);
             this.mailoutMenu.ResumeLayout(false);
             this.sectionMenu.ResumeLayout(false);
             this.eventMenu.ResumeLayout(false);
@@ -254,9 +271,11 @@
         private System.Windows.Forms.ContextMenuStrip eventMenu;
         private System.Windows.Forms.ToolStripMenuItem editEventStrip;
         private System.Windows.Forms.ToolStripMenuItem deleteEventStrip;
-        private System.Windows.Forms.ContextMenuStrip previewMenu;
-        private System.Windows.Forms.ToolStripMenuItem refreshPrviewStrip;
-        private System.Windows.Forms.ToolStripMenuItem addDescriptionStrip;
+        private System.Windows.Forms.SaveFileDialog saveMailoutDialog;
+        private System.Windows.Forms.ToolStripMenuItem blankMailoutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem standardTemplateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem refreshPreviewWindowToolStripMenuItem;
 
     }
 }

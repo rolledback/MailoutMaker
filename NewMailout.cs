@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace MailoutMaker
 {
-    public partial class NewSection : Form
+    public partial class NewMailout : Form
     {
-        public NewSection()
+        public NewMailout()
         {
             InitializeComponent();
         }
