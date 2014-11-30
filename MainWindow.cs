@@ -19,28 +19,10 @@ namespace MailoutMaker
 
         public MainWindow()
         {
+            // init all components, including the dictionary
             InitializeComponent();
+            nodeToComponent = new Dictionary<TreeNode, object>();
             mailoutComponents.NodeMouseClick += (sender, args) => mailoutComponents.SelectedNode = args.Node;
-
-            nodeToComponent = new Dictionary<TreeNode, Object>();
-            mailout = new Mailout("Hey everyone,", "Here is this weeks's AMC mailout!!! with images!!! #fancy", "Thanks for reading!", "~Matthemily");
-            mailoutNode = new TreeNode("Mailout");
-            mailoutNode.ContextMenuStrip = mailoutMenu;
-            nodeToComponent.Add(mailoutNode, mailout);
-            mailoutComponents.Nodes.Add(mailoutNode);
-
-            addSection("This Week");
-
-            Dictionary<String, String> properties = new Dictionary<String, String>();
-            properties.Add("name", "LAN Party");
-            properties.Add("date", "12/3/14");
-            properties.Add("location", "GDC 6.302");
-            properties.Add("time", "7:00PM-7:00AM");
-            properties.Add("imgUrl", "http://nrn.com/site-files/nrn.com/files/imagecache/medium_img/uploads/2008/12/noodlescospaghettimeatballs.jpg");
-            properties.Add("description", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
-
-            addEvent(mailoutComponents.Nodes[0].Nodes[0], properties);
-            mailoutPreview.DocumentText = mailout.ToString();
         }
 
         public void addSection(String name)
@@ -54,6 +36,7 @@ namespace MailoutMaker
             tempSectionNode.ContextMenuStrip = sectionMenu;
             mailoutNode.Nodes.Add(tempSectionNode);
 
+            // add node and section to the dictionary
             nodeToComponent.Add(tempSectionNode, temp);
         }
 
@@ -73,51 +56,49 @@ namespace MailoutMaker
             tempEventNode.ContextMenuStrip = eventMenu;
             parent.Nodes.Add(tempEventNode);
 
+            // add node and event to the dictionary
             nodeToComponent.Add(tempEventNode, temp);
         }
 
         private void mailoutComponents_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
+            // show dialog strip for node when right clicking
             if (e.Button == MouseButtons.Right)
             {
-                try
-                {
-                    mailoutComponents.SelectedNode.ContextMenuStrip.Show();
-                }
-                catch (Exception exception) { }
+                mailoutComponents.SelectedNode.ContextMenuStrip.Show();
             }
         }
 
         private void refreshPrviewStrip_Click(object sender, EventArgs e)
         {
+            // refresh the preview window
             mailoutPreview.DocumentText = mailout.ToString();
         }
 
         private void newSectionStrip_Click(object sender, EventArgs e)
         {
-            String newName ="";
+            // create dialog and add section if user selects ok
             NewSection newSectionDialog = new NewSection();
-            ;
             if (newSectionDialog.ShowDialog(this) == DialogResult.OK)
             {
-                newName = newSectionDialog.sectionName.Text;
-                addSection(newName);
+                addSection(newSectionDialog.sectionName.Text);
                 mailoutPreview.DocumentText = mailout.ToString();
             }
         }
 
         private void newEventStrip_Click(object sender, EventArgs e)
         {
-            NewEvent newEventDialog = new NewEvent();
-            if (newEventDialog.ShowDialog(this) == DialogResult.OK)
+            // create dialog and add event if user selects ok
+            NewEvent eventDialog = new NewEvent();
+            if (eventDialog.ShowDialog(this) == DialogResult.OK)
             {
                 Dictionary<String, String> properties = new Dictionary<String, String>();
-                properties.Add("name", newEventDialog.eventName.Text);
-                properties.Add("date", newEventDialog.eventDate.Text);
-                properties.Add("location", newEventDialog.eventLocation.Text);
-                properties.Add("time", newEventDialog.eventTime.Text);
-                properties.Add("imgUrl", newEventDialog.eventImageUrl.Text);
-                properties.Add("description", newEventDialog.eventDescription.Text);
+                properties.Add("name", eventDialog.eventName.Text);
+                properties.Add("date", eventDialog.eventDate.Text);
+                properties.Add("location", eventDialog.eventLocation.Text);
+                properties.Add("time", eventDialog.eventTime.Text);
+                properties.Add("imgUrl", eventDialog.eventImageUrl.Text);
+                properties.Add("description", eventDialog.eventDescription.Text);
                 addEvent(mailoutComponents.SelectedNode, properties);
                 mailoutPreview.DocumentText = mailout.ToString();
             }
@@ -125,129 +106,148 @@ namespace MailoutMaker
 
         private void saveMailoutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            saveMailoutDialog.Filter = "HTML File|*.html";
-            saveMailoutDialog.ShowDialog();
+            // show save file dialog
+            if (mailout != null)
+            {
+                saveMailoutDialog.Filter = "HTML File|*.html";
+                saveMailoutDialog.FileName = "mailout.html";
+                saveMailoutDialog.ShowDialog();
+            }
         }
 
         private void saveMailoutDialog_FileOk(object sender, CancelEventArgs e)
         {
-            string name = saveMailoutDialog.FileName;
-            File.WriteAllText(name, mailout.ToString());
+            // write mailout directly to text
+            File.WriteAllText(saveMailoutDialog.FileName, mailout.ToString());
         }
 
         private void editSectionStrip_Click(object sender, EventArgs e)
         {
-            String newName = "";
+            // cast the component mapped to the node to a section, if it is not a section just quit
             Section correspondingSection = nodeToComponent[mailoutComponents.SelectedNode] as Section;
             if (correspondingSection == null)
                 return;
-            NewSection newSectionDialog = new NewSection();
-                           
-            newSectionDialog.Text = "Edit Section";
-            newSectionDialog.sectionName.Text = correspondingSection.name;
 
-            if (newSectionDialog.ShowDialog(this) == DialogResult.OK)
+            // create dialog, change the name of it, and set text fields to match section properties
+            NewSection sectionDialog = new NewSection();                           
+            sectionDialog.Text = "Edit Section";
+            sectionDialog.sectionName.Text = correspondingSection.name;
+
+            // change the node string and section properties if user selects ok
+            if (sectionDialog.ShowDialog(this) == DialogResult.OK)
             {
-                newName = newSectionDialog.sectionName.Text;
-                correspondingSection.name = newName;
-                mailoutComponents.SelectedNode.Text = newName;
+                correspondingSection.name = sectionDialog.sectionName.Text;
+                mailoutComponents.SelectedNode.Text = sectionDialog.sectionName.Text;
                 mailoutPreview.DocumentText = mailout.ToString();
             }
         }
 
         private void editEventStrip_Click(object sender, EventArgs e)
         {
+            // cast the component mapped to the node to an event, if it is not an event just quit
             Event correspondingEvent = nodeToComponent[mailoutComponents.SelectedNode] as Event;
             if (correspondingEvent == null)
                 return;
-            NewEvent newEventDialog = new NewEvent();
-            
-            newEventDialog.Text = "Edit Event";
-            newEventDialog.eventName.Text = correspondingEvent.name;
-            newEventDialog.eventDate.Text = correspondingEvent.date;
-            newEventDialog.eventLocation.Text = correspondingEvent.location;
-            newEventDialog.eventTime.Text = correspondingEvent.time;
-            newEventDialog.eventImageUrl.Text = correspondingEvent.eventImage.imagePath;
-            newEventDialog.eventDescription.Text = correspondingEvent.description;
 
-            if (newEventDialog.ShowDialog(this) == DialogResult.OK)
+            // create dialog, change the name of it, and set text fields to match event properties
+            NewEvent eventDialog = new NewEvent();            
+            eventDialog.Text = "Edit Event";
+            eventDialog.eventName.Text = correspondingEvent.name;
+            eventDialog.eventDate.Text = correspondingEvent.date;
+            eventDialog.eventLocation.Text = correspondingEvent.location;
+            eventDialog.eventTime.Text = correspondingEvent.time;
+            eventDialog.eventImageUrl.Text = correspondingEvent.eventImage.imagePath;
+            eventDialog.eventDescription.Text = correspondingEvent.description;
+
+            // change the node string and event properties if the user selects ok
+            if (eventDialog.ShowDialog(this) == DialogResult.OK)
             {
                 Dictionary<String, String> properties = new Dictionary<String, String>();
-                correspondingEvent.name = newEventDialog.eventName.Text;
-                correspondingEvent.date = newEventDialog.eventDate.Text;
-                correspondingEvent.location = newEventDialog.eventLocation.Text;
-                correspondingEvent.time = newEventDialog.eventTime.Text;
-                correspondingEvent.eventImage.imagePath = newEventDialog.eventImageUrl.Text;
-                correspondingEvent.description = newEventDialog.eventDescription.Text;
-                mailoutComponents.SelectedNode.Text = newEventDialog.eventName.Text;
+                correspondingEvent.name = eventDialog.eventName.Text;
+                correspondingEvent.date = eventDialog.eventDate.Text;
+                correspondingEvent.location = eventDialog.eventLocation.Text;
+                correspondingEvent.time = eventDialog.eventTime.Text;
+                correspondingEvent.eventImage.imagePath = eventDialog.eventImageUrl.Text;
+                correspondingEvent.description = eventDialog.eventDescription.Text;
+                mailoutComponents.SelectedNode.Text = eventDialog.eventName.Text;
                 mailoutPreview.DocumentText = mailout.ToString();
             }
         }
 
         private void editMailoutStrip_Click(object sender, EventArgs e)
         {
-            NewMailout newMailoutDialog = new NewMailout();
+            // create dialog, change the name of it, and set text fields to match mailout properties
+            NewMailout mailoutDialog = new NewMailout();
+            mailoutDialog.Text = "Edit Mailout";
+            mailoutDialog.mailoutGreeting.Text = mailout.greeting;
+            mailoutDialog.mailoutIntroduction.Text = mailout.introduction;
+            mailoutDialog.mailoutEnding.Text = mailout.ending;
+            mailoutDialog.mailoutSignature.Text = mailout.signature;
 
-            newMailoutDialog.Text = "Edit Mailout";
-            newMailoutDialog.mailoutGreeting.Text = mailout.greeting;
-            newMailoutDialog.mailoutIntroduction.Text = mailout.introduction;
-            newMailoutDialog.mailoutEnding.Text = mailout.ending;
-            newMailoutDialog.mailoutSignature.Text = mailout.signature;
-
-            if (newMailoutDialog.ShowDialog(this) == DialogResult.OK)
+            // change the mailout properties if the user selects ok
+            if (mailoutDialog.ShowDialog(this) == DialogResult.OK)
             {
-                mailout.greeting = newMailoutDialog.mailoutGreeting.Text;
-                mailout.introduction = newMailoutDialog.mailoutIntroduction.Text;
-                mailout.ending = newMailoutDialog.mailoutEnding.Text;
-                mailout.signature = newMailoutDialog.mailoutSignature.Text;
+                mailout.greeting = mailoutDialog.mailoutGreeting.Text;
+                mailout.introduction = mailoutDialog.mailoutIntroduction.Text;
+                mailout.ending = mailoutDialog.mailoutEnding.Text;
+                mailout.signature = mailoutDialog.mailoutSignature.Text;
                 mailoutPreview.DocumentText = mailout.ToString();
             }
         }
 
         private void refreshPreviewWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // refresh the preview window
             mailoutPreview.DocumentText = mailout.ToString();
         }
 
         private void deleteSectionStrip_Click(object sender, EventArgs e)
         {
+            // cast the component mapped to the node to a section, if it is not a section just quit
             TreeNode selected = mailoutComponents.SelectedNode;
             Section thisSection = nodeToComponent[selected] as Section;
-            mailoutComponents.Nodes.Remove(selected);
             if (thisSection != null)
             {
+                // remove the selected node frm the tree view and the corresponding section from the mailout
+                mailoutComponents.Nodes.Remove(selected);
                 mailout.sections.Remove(thisSection);
+                mailoutPreview.DocumentText = mailout.ToString();
             }
-            mailoutPreview.DocumentText = mailout.ToString();
         }
 
         private void deleteEventStrip_Click(object sender, EventArgs e)
         {
+            // cast the component mapped to the node to an event and its parent to a section, if neither are null just quit
             TreeNode selected = mailoutComponents.SelectedNode;
-            Section parentSection = nodeToComponent[selected.Parent] as Section;
             Event thisEvent = nodeToComponent[selected] as Event;
-            mailoutComponents.Nodes.Remove(selected);
+            Section parentSection = nodeToComponent[selected.Parent] as Section;
             if (parentSection != null && thisEvent != null)
             {
+                // remove the node frm the tree view and the corresponding event from the section it belongs to
+                mailoutComponents.Nodes.Remove(selected);
                 parentSection.events.Remove(thisEvent);
+                mailoutPreview.DocumentText = mailout.ToString();
             }
-            mailoutPreview.DocumentText = mailout.ToString();
         }
 
         private void blankMailoutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            NewMailout newMailoutDialog = new NewMailout();
-            if (newMailoutDialog.ShowDialog(this) == DialogResult.OK)
+            // create dialog
+            NewMailout mailoutDialog = new NewMailout();
+
+            // create mailout with given properties if user selects ok
+            if (mailoutDialog.ShowDialog(this) == DialogResult.OK)
             {
+                // clear out tree view and the dictionary
                 mailoutComponents.Nodes.Clear();
                 nodeToComponent.Clear();
-                mailout = new Mailout(newMailoutDialog.mailoutGreeting.Text,
-                                        newMailoutDialog.mailoutIntroduction.Text,
-                                        newMailoutDialog.mailoutEnding.Text,
-                                        newMailoutDialog.mailoutSignature.Text);
+
+                mailout = new Mailout(mailoutDialog.mailoutGreeting.Text,
+                                        mailoutDialog.mailoutIntroduction.Text,
+                                        mailoutDialog.mailoutEnding.Text,
+                                        mailoutDialog.mailoutSignature.Text);
                 mailoutNode = new TreeNode("Mailout");
                 mailoutNode.ContextMenuStrip = mailoutMenu;
-                nodeToComponent.Add(mailoutNode, mailout);
                 mailoutComponents.Nodes.Add(mailoutNode);
                 mailoutPreview.DocumentText = mailout.ToString();
             }
@@ -255,9 +255,11 @@ namespace MailoutMaker
 
         private void standardTemplateToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // clear out tree view and the dictionary
             mailoutComponents.Nodes.Clear();
             nodeToComponent.Clear();
 
+            // create mailout
             mailout = new Mailout("Hey everyone,", "Here is this weeks's AMC mailout!!! with images!!! #fancy", "Thanks for reading!", "~Matthemily");
             mailoutNode = new TreeNode("Mailout");
             mailoutNode.ContextMenuStrip = mailoutMenu;
@@ -302,6 +304,7 @@ namespace MailoutMaker
             properties["imgUrl"] = "http://www.pizzamarket.net/images/pizza2.jpg";
             properties["description"] = "SOCIAL EVENT DESCRIPTION";
             addEvent(mailoutComponents.Nodes[0].Nodes[1], properties);
+
             mailoutPreview.DocumentText = mailout.ToString();
         }
     }
