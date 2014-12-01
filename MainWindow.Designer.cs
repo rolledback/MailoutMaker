@@ -52,10 +52,15 @@
             this.editEventStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteEventStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.saveMailoutDialog = new System.Windows.Forms.SaveFileDialog();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.mainMenu.SuspendLayout();
             this.mailoutMenu.SuspendLayout();
             this.sectionMenu.SuspendLayout();
             this.eventMenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -66,7 +71,7 @@
             this.helpToolStripMenuItem});
             this.mainMenu.Location = new System.Drawing.Point(0, 0);
             this.mainMenu.Name = "mainMenu";
-            this.mainMenu.Size = new System.Drawing.Size(853, 24);
+            this.mainMenu.Size = new System.Drawing.Size(889, 24);
             this.mainMenu.TabIndex = 1;
             this.mainMenu.Text = "menuStrip1";
             // 
@@ -85,7 +90,7 @@
             this.blankMailoutToolStripMenuItem,
             this.standardTemplateToolStripMenuItem});
             this.newMailoutToolStripMenuItem.Name = "newMailoutToolStripMenuItem";
-            this.newMailoutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.newMailoutToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.newMailoutToolStripMenuItem.Text = "New Mailout";
             // 
             // blankMailoutToolStripMenuItem
@@ -140,17 +145,19 @@
             // 
             // mailoutPreview
             // 
-            this.mailoutPreview.Location = new System.Drawing.Point(171, 27);
+            this.mailoutPreview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mailoutPreview.Location = new System.Drawing.Point(0, 0);
             this.mailoutPreview.MinimumSize = new System.Drawing.Size(20, 20);
             this.mailoutPreview.Name = "mailoutPreview";
-            this.mailoutPreview.Size = new System.Drawing.Size(682, 654);
+            this.mailoutPreview.Size = new System.Drawing.Size(695, 704);
             this.mailoutPreview.TabIndex = 2;
             // 
             // mailoutComponents
             // 
-            this.mailoutComponents.Location = new System.Drawing.Point(0, 27);
+            this.mailoutComponents.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mailoutComponents.Location = new System.Drawing.Point(0, 0);
             this.mailoutComponents.Name = "mailoutComponents";
-            this.mailoutComponents.Size = new System.Drawing.Size(165, 654);
+            this.mailoutComponents.Size = new System.Drawing.Size(190, 704);
             this.mailoutComponents.TabIndex = 3;
             this.mailoutComponents.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.mailoutComponents_NodeMouseClick);
             // 
@@ -188,21 +195,21 @@
             // newEventStrip
             // 
             this.newEventStrip.Name = "newEventStrip";
-            this.newEventStrip.Size = new System.Drawing.Size(152, 22);
+            this.newEventStrip.Size = new System.Drawing.Size(149, 22);
             this.newEventStrip.Text = "New Event";
             this.newEventStrip.Click += new System.EventHandler(this.newEventStrip_Click);
             // 
             // editSectionStrip
             // 
             this.editSectionStrip.Name = "editSectionStrip";
-            this.editSectionStrip.Size = new System.Drawing.Size(152, 22);
+            this.editSectionStrip.Size = new System.Drawing.Size(149, 22);
             this.editSectionStrip.Text = "Edit Section";
             this.editSectionStrip.Click += new System.EventHandler(this.editSectionStrip_Click);
             // 
             // deleteSectionStrip
             // 
             this.deleteSectionStrip.Name = "deleteSectionStrip";
-            this.deleteSectionStrip.Size = new System.Drawing.Size(152, 22);
+            this.deleteSectionStrip.Size = new System.Drawing.Size(149, 22);
             this.deleteSectionStrip.Text = "Delete Section";
             this.deleteSectionStrip.Click += new System.EventHandler(this.deleteSectionStrip_Click);
             // 
@@ -224,7 +231,7 @@
             // deleteEventStrip
             // 
             this.deleteEventStrip.Name = "deleteEventStrip";
-            this.deleteEventStrip.Size = new System.Drawing.Size(152, 22);
+            this.deleteEventStrip.Size = new System.Drawing.Size(139, 22);
             this.deleteEventStrip.Text = "Delete Event";
             this.deleteEventStrip.Click += new System.EventHandler(this.deleteEventStrip_Click);
             // 
@@ -232,13 +239,29 @@
             // 
             this.saveMailoutDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.saveMailoutDialog_FileOk);
             // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 24);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.mailoutComponents);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.mailoutPreview);
+            this.splitContainer1.Size = new System.Drawing.Size(889, 704);
+            this.splitContainer1.SplitterDistance = 190;
+            this.splitContainer1.TabIndex = 4;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(853, 684);
-            this.Controls.Add(this.mailoutComponents);
-            this.Controls.Add(this.mailoutPreview);
+            this.ClientSize = new System.Drawing.Size(889, 728);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.mainMenu);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.mainMenu;
@@ -250,6 +273,10 @@
             this.mailoutMenu.ResumeLayout(false);
             this.sectionMenu.ResumeLayout(false);
             this.eventMenu.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -280,6 +307,7 @@
         private System.Windows.Forms.ToolStripMenuItem standardTemplateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem refreshPreviewWindowToolStripMenuItem;
+        private System.Windows.Forms.SplitContainer splitContainer1;
 
     }
 }
