@@ -78,10 +78,12 @@ namespace MailoutMaker
         private void newSectionStrip_Click(object sender, EventArgs e)
         {
             // create dialog and add section if user selects ok
-            NewSection newSectionDialog = new NewSection();
-            if (newSectionDialog.ShowDialog(this) == DialogResult.OK)
+            NewSection sectionDialog = new NewSection();
+            sectionDialog.StartPosition = FormStartPosition.CenterParent;
+
+            if (sectionDialog.ShowDialog(this) == DialogResult.OK)
             {
-                addSection(newSectionDialog.sectionName.Text);
+                addSection(sectionDialog.sectionName.Text);
                 mailoutPreview.DocumentText = mailout.ToString();
             }
         }
@@ -90,6 +92,8 @@ namespace MailoutMaker
         {
             // create dialog and add event if user selects ok
             NewEvent eventDialog = new NewEvent();
+            eventDialog.StartPosition = FormStartPosition.CenterParent;
+
             if (eventDialog.ShowDialog(this) == DialogResult.OK)
             {
                 Dictionary<String, String> properties = new Dictionary<String, String>();
@@ -129,7 +133,8 @@ namespace MailoutMaker
                 return;
 
             // create dialog, change the name of it, and set text fields to match section properties
-            NewSection sectionDialog = new NewSection();                           
+            NewSection sectionDialog = new NewSection();
+            sectionDialog.StartPosition = FormStartPosition.CenterParent;       
             sectionDialog.Text = "Edit Section";
             sectionDialog.sectionName.Text = correspondingSection.name;
 
@@ -150,7 +155,8 @@ namespace MailoutMaker
                 return;
 
             // create dialog, change the name of it, and set text fields to match event properties
-            NewEvent eventDialog = new NewEvent();            
+            NewEvent eventDialog = new NewEvent();
+            eventDialog.StartPosition = FormStartPosition.CenterParent;
             eventDialog.Text = "Edit Event";
             eventDialog.eventName.Text = correspondingEvent.name;
             eventDialog.eventDate.Text = correspondingEvent.date;
@@ -178,6 +184,7 @@ namespace MailoutMaker
         {
             // create dialog, change the name of it, and set text fields to match mailout properties
             NewMailout mailoutDialog = new NewMailout();
+            mailoutDialog.StartPosition = FormStartPosition.CenterParent;
             mailoutDialog.Text = "Edit Mailout";
             mailoutDialog.mailoutGreeting.Text = mailout.greeting;
             mailoutDialog.mailoutIntroduction.Text = mailout.introduction;
@@ -234,6 +241,7 @@ namespace MailoutMaker
         {
             // create dialog
             NewMailout mailoutDialog = new NewMailout();
+            mailoutDialog.StartPosition = FormStartPosition.CenterParent;
 
             // create mailout with given properties if user selects ok
             if (mailoutDialog.ShowDialog(this) == DialogResult.OK)
