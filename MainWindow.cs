@@ -205,7 +205,8 @@ namespace MailoutMaker
         private void refreshPreviewWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // refresh the preview window
-            mailoutPreview.DocumentText = mailout.ToString();
+            if(mailout != null)
+                mailoutPreview.DocumentText = mailout.ToString();
         }
 
         private void deleteSectionStrip_Click(object sender, EventArgs e)
@@ -312,7 +313,6 @@ namespace MailoutMaker
             properties["imgUrl"] = "http://www.pizzamarket.net/images/pizza2.jpg";
             properties["description"] = "SOCIAL EVENT DESCRIPTION";
             addEvent(mailoutComponents.Nodes[0].Nodes[1], properties);
-
             mailoutPreview.DocumentText = mailout.ToString();
         }
     }

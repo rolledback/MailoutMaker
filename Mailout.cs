@@ -37,7 +37,7 @@ namespace MailoutMaker
                 mailout += s;
             }
 
-            mailout += "\n<br>\n<br>\n" + ending + "\n<br>\n<br>\n" + signature;
+            mailout += "<br>\n<br>\n" + ending + "\n<br>\n<br>\n" + signature;
 
             return mailout;
         }
