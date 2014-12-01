@@ -69,12 +69,6 @@ namespace MailoutMaker
             }
         }
 
-        private void refreshPrviewStrip_Click(object sender, EventArgs e)
-        {
-            // refresh the preview window
-            mailoutPreview.DocumentText = mailout.ToString();
-        }
-
         private void newSectionStrip_Click(object sender, EventArgs e)
         {
             // create dialog and add section if user selects ok
@@ -84,7 +78,7 @@ namespace MailoutMaker
             if (sectionDialog.ShowDialog(this) == DialogResult.OK)
             {
                 addSection(sectionDialog.sectionName.Text);
-                mailoutPreview.DocumentText = mailout.ToString();
+                mailoutPreview.Document.Write(mailout.ToString());
             }
         }
 
@@ -104,7 +98,7 @@ namespace MailoutMaker
                 properties.Add("imgUrl", eventDialog.eventImageUrl.Text);
                 properties.Add("description", eventDialog.eventDescription.Text);
                 addEvent(mailoutComponents.SelectedNode, properties);
-                mailoutPreview.DocumentText = mailout.ToString();
+                mailoutPreview.Document.Write(mailout.ToString());
             }
         }
 
@@ -143,7 +137,7 @@ namespace MailoutMaker
             {
                 correspondingSection.name = sectionDialog.sectionName.Text;
                 mailoutComponents.SelectedNode.Text = sectionDialog.sectionName.Text;
-                mailoutPreview.DocumentText = mailout.ToString();
+                mailoutPreview.Document.Write(mailout.ToString());
             }
         }
 
@@ -176,7 +170,7 @@ namespace MailoutMaker
                 correspondingEvent.eventImage.imagePath = eventDialog.eventImageUrl.Text;
                 correspondingEvent.description = eventDialog.eventDescription.Text;
                 mailoutComponents.SelectedNode.Text = eventDialog.eventName.Text;
-                mailoutPreview.DocumentText = mailout.ToString();
+                mailoutPreview.Document.Write(mailout.ToString());
             }
         }
 
@@ -198,15 +192,15 @@ namespace MailoutMaker
                 mailout.introduction = mailoutDialog.mailoutIntroduction.Text;
                 mailout.ending = mailoutDialog.mailoutEnding.Text;
                 mailout.signature = mailoutDialog.mailoutSignature.Text;
-                mailoutPreview.DocumentText = mailout.ToString();
+                mailoutPreview.Document.Write(mailout.ToString());
             }
         }
 
         private void refreshPreviewWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // refresh the preview window
-            if(mailout != null)
-                mailoutPreview.DocumentText = mailout.ToString();
+            if (mailout != null)
+                mailoutPreview.Document.Write(mailout.ToString());
         }
 
         private void deleteSectionStrip_Click(object sender, EventArgs e)
@@ -219,7 +213,7 @@ namespace MailoutMaker
                 // remove the selected node frm the tree view and the corresponding section from the mailout
                 mailoutComponents.Nodes.Remove(selected);
                 mailout.sections.Remove(thisSection);
-                mailoutPreview.DocumentText = mailout.ToString();
+                mailoutPreview.Document.Write(mailout.ToString());
             }
         }
 
@@ -234,7 +228,7 @@ namespace MailoutMaker
                 // remove the node frm the tree view and the corresponding event from the section it belongs to
                 mailoutComponents.Nodes.Remove(selected);
                 parentSection.events.Remove(thisEvent);
-                mailoutPreview.DocumentText = mailout.ToString();
+                mailoutPreview.Document.Write(mailout.ToString());
             }
         }
 
@@ -258,7 +252,7 @@ namespace MailoutMaker
                 mailoutNode = new TreeNode("Mailout");
                 mailoutNode.ContextMenuStrip = mailoutMenu;
                 mailoutComponents.Nodes.Add(mailoutNode);
-                mailoutPreview.DocumentText = mailout.ToString();
+                mailoutPreview.Document.Write(mailout.ToString());
             }
         }
 
@@ -313,7 +307,8 @@ namespace MailoutMaker
             properties["imgUrl"] = "http://www.pizzamarket.net/images/pizza2.jpg";
             properties["description"] = "SOCIAL EVENT DESCRIPTION";
             addEvent(mailoutComponents.Nodes[0].Nodes[1], properties);
-            mailoutPreview.DocumentText = mailout.ToString();
+
+            mailoutPreview.Document.Write(mailout.ToString());
         }
     }
 }
