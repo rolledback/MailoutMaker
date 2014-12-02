@@ -46,7 +46,15 @@ namespace MailoutMaker {
                                     properties["time"],
                                     properties["imgUrl"],
                                     properties["description"]);
-            (nodeToComponent[parent] as Section).events.Add(temp);
+            Section parentSection = nodeToComponent[parent] as Section;
+            if (parentSection != null) {
+                parentSection.events.Add(temp);
+            }
+            else {
+                MessageBox.Show("ADD EVENT HELPER CAST ERROR", "RUNTIME ERROR");
+                return;
+            }
+            
 
             // creat corresponding node
             TreeNode tempEventNode = new TreeNode(temp.name);
@@ -102,6 +110,9 @@ namespace MailoutMaker {
                 saveMailoutDialog.FileName = "mailout.html";
                 saveMailoutDialog.ShowDialog();
             }
+            else {
+                MessageBox.Show("A mailout has not been created yet.", "Cannot Save");
+            }
         }
 
         private void saveMailoutDialog_FileOk(object sender, CancelEventArgs e) {
@@ -112,8 +123,10 @@ namespace MailoutMaker {
         private void editSectionStrip_Click(object sender, EventArgs e) {
             // cast the component mapped to the node to a section, if it is not a section just quit
             Section correspondingSection = nodeToComponent[mailoutComponents.SelectedNode] as Section;
-            if (correspondingSection == null)
+            if (correspondingSection == null) {
+                MessageBox.Show("ADD SECTION CAST ERROR", "RUNTIME ERROR");
                 return;
+            }
 
             // create dialog, change the name of it, and set text fields to match section properties
             NewSection sectionDialog = new NewSection();
@@ -133,8 +146,10 @@ namespace MailoutMaker {
         private void editEventStrip_Click(object sender, EventArgs e) {
             // cast the component mapped to the node to an event, if it is not an event just quit
             Event correspondingEvent = nodeToComponent[mailoutComponents.SelectedNode] as Event;
-            if (correspondingEvent == null)
+            if (correspondingEvent == null) {
+                MessageBox.Show("ADD EVENT CAST ERROR", "RUNTIME ERROR");
                 return;
+            }
 
             // create dialog, change the name of it, and set text fields to match event properties
             NewEvent eventDialog = new NewEvent();
@@ -189,6 +204,9 @@ namespace MailoutMaker {
                 mailoutPreview.Document.OpenNew(true);
                 mailoutPreview.Document.Write(mailout.ToString());
             }
+            else {
+                MessageBox.Show("No mailout to refresh preview for.", "Error");
+            }
         }
 
         private void deleteSectionStrip_Click(object sender, EventArgs e) {
@@ -201,6 +219,9 @@ namespace MailoutMaker {
                 mailout.sections.Remove(thisSection);
                 mailoutPreview.Document.OpenNew(true);
                 mailoutPreview.Document.Write(mailout.ToString());
+            }
+            else {
+                MessageBox.Show("DELETE SECTION CAST ERROR", "RUNTIME ERROR");
             }
         }
 
@@ -216,6 +237,10 @@ namespace MailoutMaker {
                 mailoutPreview.Document.OpenNew(true);
                 mailoutPreview.Document.Write(mailout.ToString());
             }
+            else {
+                MessageBox.Show("DELETE EVENT CAST ERROR", "RUNTIME ERROR");
+            }
+
         }
 
         private void blankMailoutToolStripMenuItem_Click(object sender, EventArgs e) {

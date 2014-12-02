@@ -15,8 +15,13 @@ namespace MailoutMaker {
         }
 
         private void okButton_Click(object sender, EventArgs e) {
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            if (sectionName.Text.Equals("")) {
+                MessageBox.Show("Please fill in all of the fields.", "Missing Values");
+            }
+            else {
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
         }
 
         private void cancelButton_Click(object sender, EventArgs e) {
