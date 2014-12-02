@@ -2,7 +2,6 @@ C:\Users\Matthew\Documents\Visual Studio 2013\Projects\MailoutMaker\MailoutMaker
 C:\Users\Matthew\Documents\Visual Studio 2013\Projects\MailoutMaker\bin\Debug\MailoutMaker.exe.config
 C:\Users\Matthew\Documents\Visual Studio 2013\Projects\MailoutMaker\bin\Debug\MailoutMaker.exe
 C:\Users\Matthew\Documents\Visual Studio 2013\Projects\MailoutMaker\bin\Debug\MailoutMaker.pdb
-C:\Users\Matthew\Documents\Visual Studio 2013\Projects\MailoutMaker\obj\Debug\MailoutMaker.csprojResolveAssemblyReference.cache
 C:\Users\Matthew\Documents\Visual Studio 2013\Projects\MailoutMaker\obj\Debug\MailoutMaker.MainWindow.resources
 C:\Users\Matthew\Documents\Visual Studio 2013\Projects\MailoutMaker\obj\Debug\MailoutMaker.Properties.Resources.resources
 C:\Users\Matthew\Documents\Visual Studio 2013\Projects\MailoutMaker\obj\Debug\MailoutMaker.csproj.GenerateResource.Cache
@@ -11,3 +10,4 @@ C:\Users\Matthew\Documents\Visual Studio 2013\Projects\MailoutMaker\obj\Debug\Ma
 C:\Users\Matthew\Documents\Visual Studio 2013\Projects\MailoutMaker\obj\Debug\MailoutMaker.NewSection.resources
 C:\Users\Matthew\Documents\Visual Studio 2013\Projects\MailoutMaker\obj\Debug\MailoutMaker.NewEvent.resources
 C:\Users\Matthew\Documents\Visual Studio 2013\Projects\MailoutMaker\obj\Debug\MailoutMaker.NewMailout.resources
+C:\Users\Matthew\Documents\Visual Studio 2013\Projects\MailoutMaker\obj\Debug\MailoutMaker.csprojResolveAssemblyReference.cache
