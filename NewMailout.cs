@@ -8,23 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MailoutMaker
-{
-    public partial class NewMailout : Form
-    {
-        public NewMailout()
-        {
+namespace MailoutMaker {
+    public partial class NewMailout : Form {
+        public NewMailout() {
             InitializeComponent();
         }
 
-        private void okButton_Click(object sender, EventArgs e)
-        {
+        private void okButton_Click(object sender, EventArgs e) {
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
 
-        private void cancelButton_Click(object sender, EventArgs e)
-        {
+        private void cancelButton_Click(object sender, EventArgs e) {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }

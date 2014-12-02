@@ -9,16 +9,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MailoutMaker
-{
+namespace MailoutMaker {
     public partial class MainWindow : Form {
-    
+
         Mailout mailout;
         Dictionary<TreeNode, Object> nodeToComponent;
         TreeNode mailoutNode;
 
-        public MainWindow()
-        {
+        public MainWindow() {
             // init all components, including the dictionary
             InitializeComponent();
             mailoutPreview.Navigate("about:blank");
@@ -26,8 +24,7 @@ namespace MailoutMaker
             mailoutComponents.NodeMouseClick += (sender, args) => mailoutComponents.SelectedNode = args.Node;
         }
 
-        public void addSection(String name)
-        {
+        public void addSection(String name) {
             // create the section
             Section temp = new Section(name);
             mailout.sections.Add(temp);
@@ -41,8 +38,7 @@ namespace MailoutMaker
             nodeToComponent.Add(tempSectionNode, temp);
         }
 
-        public void addEvent(TreeNode parent, Dictionary<String, String> properties)
-        {
+        public void addEvent(TreeNode parent, Dictionary<String, String> properties) {
             // create the event
             Event temp = new Event(properties["name"],
                                     properties["date"],
@@ -61,37 +57,31 @@ namespace MailoutMaker
             nodeToComponent.Add(tempEventNode, temp);
         }
 
-        private void mailoutComponents_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
-        {
+        private void mailoutComponents_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e) {
             // show dialog strip for node when right clicking
-            if (e.Button == MouseButtons.Right)
-            {
+            if (e.Button == MouseButtons.Right) {
                 mailoutComponents.SelectedNode.ContextMenuStrip.Show();
             }
         }
 
-        private void newSectionStrip_Click(object sender, EventArgs e)
-        {
+        private void newSectionStrip_Click(object sender, EventArgs e) {
             // create dialog and add section if user selects ok
             NewSection sectionDialog = new NewSection();
             sectionDialog.StartPosition = FormStartPosition.CenterParent;
 
-            if (sectionDialog.ShowDialog(this) == DialogResult.OK)
-            {
+            if (sectionDialog.ShowDialog(this) == DialogResult.OK) {
                 addSection(sectionDialog.sectionName.Text);
                 mailoutPreview.DocumentText = mailout.ToString();
                 mailoutPreview.Document.Write(mailout.ToString());
             }
         }
 
-        private void newEventStrip_Click(object sender, EventArgs e)
-        {
+        private void newEventStrip_Click(object sender, EventArgs e) {
             // create dialog and add event if user selects ok
             NewEvent eventDialog = new NewEvent();
             eventDialog.StartPosition = FormStartPosition.CenterParent;
 
-            if (eventDialog.ShowDialog(this) == DialogResult.OK)
-            {
+            if (eventDialog.ShowDialog(this) == DialogResult.OK) {
                 Dictionary<String, String> properties = new Dictionary<String, String>();
                 properties.Add("name", eventDialog.eventName.Text);
                 properties.Add("date", eventDialog.eventDate.Text);
@@ -105,25 +95,21 @@ namespace MailoutMaker
             }
         }
 
-        private void saveMailoutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+        private void saveMailoutToolStripMenuItem_Click(object sender, EventArgs e) {
             // show save file dialog
-            if (mailout != null)
-            {
+            if (mailout != null) {
                 saveMailoutDialog.Filter = "HTML File|*.html";
                 saveMailoutDialog.FileName = "mailout.html";
                 saveMailoutDialog.ShowDialog();
             }
         }
 
-        private void saveMailoutDialog_FileOk(object sender, CancelEventArgs e)
-        {
+        private void saveMailoutDialog_FileOk(object sender, CancelEventArgs e) {
             // write mailout directly to text
             File.WriteAllText(saveMailoutDialog.FileName, mailout.ToString());
         }
 
-        private void editSectionStrip_Click(object sender, EventArgs e)
-        {
+        private void editSectionStrip_Click(object sender, EventArgs e) {
             // cast the component mapped to the node to a section, if it is not a section just quit
             Section correspondingSection = nodeToComponent[mailoutComponents.SelectedNode] as Section;
             if (correspondingSection == null)
@@ -131,13 +117,12 @@ namespace MailoutMaker
 
             // create dialog, change the name of it, and set text fields to match section properties
             NewSection sectionDialog = new NewSection();
-            sectionDialog.StartPosition = FormStartPosition.CenterParent;       
+            sectionDialog.StartPosition = FormStartPosition.CenterParent;
             sectionDialog.Text = "Edit Section";
             sectionDialog.sectionName.Text = correspondingSection.name;
 
             // change the node string and section properties if user selects ok
-            if (sectionDialog.ShowDialog(this) == DialogResult.OK)
-            {
+            if (sectionDialog.ShowDialog(this) == DialogResult.OK) {
                 correspondingSection.name = sectionDialog.sectionName.Text;
                 mailoutComponents.SelectedNode.Text = sectionDialog.sectionName.Text;
                 mailoutPreview.DocumentText = mailout.ToString();
@@ -145,8 +130,7 @@ namespace MailoutMaker
             }
         }
 
-        private void editEventStrip_Click(object sender, EventArgs e)
-        {
+        private void editEventStrip_Click(object sender, EventArgs e) {
             // cast the component mapped to the node to an event, if it is not an event just quit
             Event correspondingEvent = nodeToComponent[mailoutComponents.SelectedNode] as Event;
             if (correspondingEvent == null)
@@ -164,8 +148,7 @@ namespace MailoutMaker
             eventDialog.eventDescription.Text = correspondingEvent.description;
 
             // change the node string and event properties if the user selects ok
-            if (eventDialog.ShowDialog(this) == DialogResult.OK)
-            {
+            if (eventDialog.ShowDialog(this) == DialogResult.OK) {
                 Dictionary<String, String> properties = new Dictionary<String, String>();
                 correspondingEvent.name = eventDialog.eventName.Text;
                 correspondingEvent.date = eventDialog.eventDate.Text;
@@ -179,8 +162,7 @@ namespace MailoutMaker
             }
         }
 
-        private void editMailoutStrip_Click(object sender, EventArgs e)
-        {
+        private void editMailoutStrip_Click(object sender, EventArgs e) {
             // create dialog, change the name of it, and set text fields to match mailout properties
             NewMailout mailoutDialog = new NewMailout();
             mailoutDialog.StartPosition = FormStartPosition.CenterParent;
@@ -191,8 +173,7 @@ namespace MailoutMaker
             mailoutDialog.mailoutSignature.Text = mailout.signature;
 
             // change the mailout properties if the user selects ok
-            if (mailoutDialog.ShowDialog(this) == DialogResult.OK)
-            {
+            if (mailoutDialog.ShowDialog(this) == DialogResult.OK) {
                 mailout.greeting = mailoutDialog.mailoutGreeting.Text;
                 mailout.introduction = mailoutDialog.mailoutIntroduction.Text;
                 mailout.ending = mailoutDialog.mailoutEnding.Text;
@@ -202,23 +183,19 @@ namespace MailoutMaker
             }
         }
 
-        private void refreshPreviewWindowToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+        private void refreshPreviewWindowToolStripMenuItem_Click(object sender, EventArgs e) {
             // refresh the preview window
-            if (mailout != null) 
-            {
+            if (mailout != null) {
                 mailoutPreview.Document.OpenNew(true);
                 mailoutPreview.Document.Write(mailout.ToString());
             }
         }
 
-        private void deleteSectionStrip_Click(object sender, EventArgs e)
-        {
+        private void deleteSectionStrip_Click(object sender, EventArgs e) {
             // cast the component mapped to the node to a section, if it is not a section just quit
             TreeNode selected = mailoutComponents.SelectedNode;
             Section thisSection = nodeToComponent[selected] as Section;
-            if (thisSection != null)
-            {
+            if (thisSection != null) {
                 // remove the selected node frm the tree view and the corresponding section from the mailout
                 mailoutComponents.Nodes.Remove(selected);
                 mailout.sections.Remove(thisSection);
@@ -227,14 +204,12 @@ namespace MailoutMaker
             }
         }
 
-        private void deleteEventStrip_Click(object sender, EventArgs e)
-        {
+        private void deleteEventStrip_Click(object sender, EventArgs e) {
             // cast the component mapped to the node to an event and its parent to a section, if neither are null just quit
             TreeNode selected = mailoutComponents.SelectedNode;
             Event thisEvent = nodeToComponent[selected] as Event;
             Section parentSection = nodeToComponent[selected.Parent] as Section;
-            if (parentSection != null && thisEvent != null)
-            {
+            if (parentSection != null && thisEvent != null) {
                 // remove the node frm the tree view and the corresponding event from the section it belongs to
                 mailoutComponents.Nodes.Remove(selected);
                 parentSection.events.Remove(thisEvent);
@@ -243,15 +218,13 @@ namespace MailoutMaker
             }
         }
 
-        private void blankMailoutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+        private void blankMailoutToolStripMenuItem_Click(object sender, EventArgs e) {
             // create dialog
             NewMailout mailoutDialog = new NewMailout();
             mailoutDialog.StartPosition = FormStartPosition.CenterParent;
 
             // create mailout with given properties if user selects ok
-            if (mailoutDialog.ShowDialog(this) == DialogResult.OK)
-            {
+            if (mailoutDialog.ShowDialog(this) == DialogResult.OK) {
                 // clear out tree view and the dictionary
                 mailoutComponents.Nodes.Clear();
                 nodeToComponent.Clear();
@@ -268,8 +241,7 @@ namespace MailoutMaker
             }
         }
 
-        private void standardTemplateToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+        private void standardTemplateToolStripMenuItem_Click(object sender, EventArgs e) {
             // clear out tree view and the dictionary
             mailoutComponents.Nodes.Clear();
             nodeToComponent.Clear();
@@ -292,7 +264,7 @@ namespace MailoutMaker
             properties.Add("description", "Come and join us at the weekly meeting. Hear about what we did last week and more specifics about what's to come this week and in the near future. This weeks sponsor, _______________, will also be there to talk about who they are and of course take your resumes. There will also be free _______________!. ");
             addEvent(mailoutComponents.Nodes[0].Nodes[0], properties);
 
-            properties["name"]= "Social Event Sponsored By _______________";
+            properties["name"] = "Social Event Sponsored By _______________";
             properties["date"] = "12/3/14";
             properties["location"] = "GDC 6.302";
             properties["time"] = "6:00PM-10:00PM";
