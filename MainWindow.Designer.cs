@@ -263,9 +263,7 @@
             this.ClientSize = new System.Drawing.Size(889, 728);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.mainMenu);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.mainMenu;
-            this.MaximizeBox = false;
             this.Name = "MainWindow";
             this.Text = "Mailout Maker";
             this.mainMenu.ResumeLayout(false);

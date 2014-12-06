@@ -195,7 +195,6 @@
             this.MaximizeBox = false;
             this.Name = "NewEvent";
             this.Text = "New Event";
-            this.Load += new System.EventHandler(this.NewEvent_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
