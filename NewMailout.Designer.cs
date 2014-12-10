@@ -82,7 +82,7 @@
             this.mailoutGreeting.Location = new System.Drawing.Point(121, 4);
             this.mailoutGreeting.Name = "mailoutGreeting";
             this.mailoutGreeting.Size = new System.Drawing.Size(247, 21);
-            this.mailoutGreeting.TabIndex = 4;
+            this.mailoutGreeting.TabIndex = 1;
             // 
             // mailoutIntroduction
             // 
@@ -91,7 +91,7 @@
             this.mailoutIntroduction.Multiline = true;
             this.mailoutIntroduction.Name = "mailoutIntroduction";
             this.mailoutIntroduction.Size = new System.Drawing.Size(247, 75);
-            this.mailoutIntroduction.TabIndex = 5;
+            this.mailoutIntroduction.TabIndex = 2;
             // 
             // mailoutEnding
             // 
@@ -100,7 +100,7 @@
             this.mailoutEnding.Multiline = true;
             this.mailoutEnding.Name = "mailoutEnding";
             this.mailoutEnding.Size = new System.Drawing.Size(247, 75);
-            this.mailoutEnding.TabIndex = 6;
+            this.mailoutEnding.TabIndex = 3;
             // 
             // mailoutSignature
             // 
@@ -108,14 +108,14 @@
             this.mailoutSignature.Location = new System.Drawing.Point(121, 194);
             this.mailoutSignature.Name = "mailoutSignature";
             this.mailoutSignature.Size = new System.Drawing.Size(247, 21);
-            this.mailoutSignature.TabIndex = 7;
+            this.mailoutSignature.TabIndex = 4;
             // 
             // cancelButton
             // 
             this.cancelButton.Location = new System.Drawing.Point(196, 225);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 13;
+            this.cancelButton.TabIndex = 6;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
@@ -125,7 +125,7 @@
             this.okButton.Location = new System.Drawing.Point(102, 225);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
-            this.okButton.TabIndex = 12;
+            this.okButton.TabIndex = 5;
             this.okButton.Text = "Ok";
             this.okButton.UseVisualStyleBackColor = true;
             this.okButton.Click += new System.EventHandler(this.okButton_Click);

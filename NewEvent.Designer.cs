@@ -68,7 +68,7 @@
             this.eventDate.Location = new System.Drawing.Point(105, 36);
             this.eventDate.Name = "eventDate";
             this.eventDate.Size = new System.Drawing.Size(295, 21);
-            this.eventDate.TabIndex = 3;
+            this.eventDate.TabIndex = 2;
             // 
             // eventDateTextBoxLabel
             // 
@@ -86,7 +86,7 @@
             this.eventLocation.Location = new System.Drawing.Point(105, 68);
             this.eventLocation.Name = "eventLocation";
             this.eventLocation.Size = new System.Drawing.Size(295, 21);
-            this.eventLocation.TabIndex = 5;
+            this.eventLocation.TabIndex = 3;
             // 
             // eventLocationTextBoxLabel
             // 
@@ -104,7 +104,7 @@
             this.eventImageUrl.Location = new System.Drawing.Point(105, 133);
             this.eventImageUrl.Name = "eventImageUrl";
             this.eventImageUrl.Size = new System.Drawing.Size(295, 21);
-            this.eventImageUrl.TabIndex = 7;
+            this.eventImageUrl.TabIndex = 5;
             // 
             // eventImageTextBoxLabel
             // 
@@ -122,7 +122,7 @@
             this.eventTime.Location = new System.Drawing.Point(105, 98);
             this.eventTime.Name = "eventTime";
             this.eventTime.Size = new System.Drawing.Size(295, 21);
-            this.eventTime.TabIndex = 9;
+            this.eventTime.TabIndex = 4;
             // 
             // eventTimeTextBoxLabel
             // 
@@ -139,7 +139,7 @@
             this.cancelButton.Location = new System.Drawing.Point(208, 303);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 11;
+            this.cancelButton.TabIndex = 8;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
@@ -149,7 +149,7 @@
             this.okButton.Location = new System.Drawing.Point(114, 303);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
-            this.okButton.TabIndex = 10;
+            this.okButton.TabIndex = 7;
             this.okButton.Text = "Ok";
             this.okButton.UseVisualStyleBackColor = true;
             this.okButton.Click += new System.EventHandler(this.okButton_Click);
@@ -160,7 +160,7 @@
             this.eventDescription.Multiline = true;
             this.eventDescription.Name = "eventDescription";
             this.eventDescription.Size = new System.Drawing.Size(295, 134);
-            this.eventDescription.TabIndex = 12;
+            this.eventDescription.TabIndex = 6;
             // 
             // descriptionTextBoxLabel
             // 
