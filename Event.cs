@@ -27,16 +27,14 @@ namespace MailoutMaker {
             String eventString = "<h3>" + name + "</h3>\n";
             eventString += "<p>" + description + "</p>\n";
             eventString += "\n";
-            if (date != null || location != null || time != null) {
-                eventString += "<ul>\n";
-                if (date != null)
-                    eventString += "\t<li>Date: " + date + "</li>\n";
-                if (location != null)
-                    eventString += "\t<li>Location: " + location + "</li>\n";
-                if (time != null)
-                    eventString += "\t<li>Time: " + time + "</li>\n";
-                eventString += "</ul>\n\n";
-            }
+            eventString += "<ul>\n";
+            if (date != null && !date.Equals(""))
+                eventString += "\t<li>Date: " + date + "</li>\n";
+            if (location != null && !location.Equals(""))
+                eventString += "\t<li>Location: " + location + "</li>\n";
+            if (time != null && !time.Equals(""))
+                eventString += "\t<li>Time: " + time + "</li>\n";
+            eventString += "</ul>\n\n";
             if (eventImage != null && eventImage.ToString() != "")
                 eventString += eventImage;
             return eventString;
