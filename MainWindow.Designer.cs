@@ -53,6 +53,11 @@
             this.deleteEventStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.saveMailoutDialog = new System.Windows.Forms.SaveFileDialog();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.moveUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveDownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveUpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveDownToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.changeSectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
             this.mailoutMenu.SuspendLayout();
             this.sectionMenu.SuspendLayout();
@@ -188,9 +193,11 @@
             this.sectionMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newEventStrip,
             this.editSectionStrip,
-            this.deleteSectionStrip});
+            this.deleteSectionStrip,
+            this.moveUpToolStripMenuItem,
+            this.moveDownToolStripMenuItem});
             this.sectionMenu.Name = "sectionMenu";
-            this.sectionMenu.Size = new System.Drawing.Size(150, 70);
+            this.sectionMenu.Size = new System.Drawing.Size(150, 114);
             // 
             // newEventStrip
             // 
@@ -217,21 +224,24 @@
             // 
             this.eventMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.editEventStrip,
+            this.moveUpToolStripMenuItem1,
+            this.moveDownToolStripMenuItem1,
+            this.changeSectionToolStripMenuItem,
             this.deleteEventStrip});
             this.eventMenu.Name = "eventMenu";
-            this.eventMenu.Size = new System.Drawing.Size(140, 48);
+            this.eventMenu.Size = new System.Drawing.Size(158, 136);
             // 
             // editEventStrip
             // 
             this.editEventStrip.Name = "editEventStrip";
-            this.editEventStrip.Size = new System.Drawing.Size(139, 22);
+            this.editEventStrip.Size = new System.Drawing.Size(157, 22);
             this.editEventStrip.Text = "Edit Event";
             this.editEventStrip.Click += new System.EventHandler(this.editEventStrip_Click);
             // 
             // deleteEventStrip
             // 
             this.deleteEventStrip.Name = "deleteEventStrip";
-            this.deleteEventStrip.Size = new System.Drawing.Size(139, 22);
+            this.deleteEventStrip.Size = new System.Drawing.Size(157, 22);
             this.deleteEventStrip.Text = "Delete Event";
             this.deleteEventStrip.Click += new System.EventHandler(this.deleteEventStrip_Click);
             // 
@@ -255,6 +265,38 @@
             this.splitContainer1.Size = new System.Drawing.Size(889, 704);
             this.splitContainer1.SplitterDistance = 190;
             this.splitContainer1.TabIndex = 4;
+            // 
+            // moveUpToolStripMenuItem
+            // 
+            this.moveUpToolStripMenuItem.Name = "moveUpToolStripMenuItem";
+            this.moveUpToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.moveUpToolStripMenuItem.Text = "Move Up";
+            // 
+            // moveDownToolStripMenuItem
+            // 
+            this.moveDownToolStripMenuItem.Name = "moveDownToolStripMenuItem";
+            this.moveDownToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.moveDownToolStripMenuItem.Text = "Move Down";
+            // 
+            // moveUpToolStripMenuItem1
+            // 
+            this.moveUpToolStripMenuItem1.Name = "moveUpToolStripMenuItem1";
+            this.moveUpToolStripMenuItem1.Size = new System.Drawing.Size(157, 22);
+            this.moveUpToolStripMenuItem1.Text = "Move Up";
+            this.moveUpToolStripMenuItem1.Click += new System.EventHandler(this.moveUpToolStripMenuItem1_Click);
+            // 
+            // moveDownToolStripMenuItem1
+            // 
+            this.moveDownToolStripMenuItem1.Name = "moveDownToolStripMenuItem1";
+            this.moveDownToolStripMenuItem1.Size = new System.Drawing.Size(157, 22);
+            this.moveDownToolStripMenuItem1.Text = "Move Down";
+            this.moveDownToolStripMenuItem1.Click += new System.EventHandler(this.moveDownToolStripMenuItem1_Click);
+            // 
+            // changeSectionToolStripMenuItem
+            // 
+            this.changeSectionToolStripMenuItem.Name = "changeSectionToolStripMenuItem";
+            this.changeSectionToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.changeSectionToolStripMenuItem.Text = "Change Section";
             // 
             // MainWindow
             // 
@@ -306,6 +348,11 @@
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem refreshPreviewWindowToolStripMenuItem;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.ToolStripMenuItem moveUpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem moveDownToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem moveUpToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem moveDownToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem changeSectionToolStripMenuItem;
 
     }
 }

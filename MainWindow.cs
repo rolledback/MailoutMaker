@@ -210,37 +210,40 @@ namespace MailoutMaker {
         }
 
         private void deleteSectionStrip_Click(object sender, EventArgs e) {
-            // cast the component mapped to the node to a section, if it is not a section just quit
-            TreeNode selected = mailoutComponents.SelectedNode;
-            Section thisSection = nodeToComponent[selected] as Section;
-            if (thisSection != null) {
-                // remove the selected node frm the tree view and the corresponding section from the mailout
-                mailoutComponents.Nodes.Remove(selected);
-                mailout.sections.Remove(thisSection);
-                mailoutPreview.Document.OpenNew(true);
-                mailoutPreview.Document.Write(mailout.ToString());
-            }
-            else {
-                MessageBox.Show("DELETE SECTION CAST ERROR", "RUNTIME ERROR");
+            if (MessageBox.Show("Are you sure?", "Confirm Deletion", MessageBoxButtons.OKCancel) == DialogResult.OK) {
+                // cast the component mapped to the node to a section, if it is not a section just quit
+                TreeNode selected = mailoutComponents.SelectedNode;
+                Section thisSection = nodeToComponent[selected] as Section;
+                if (thisSection != null) {
+                    // remove the selected node frm the tree view and the corresponding section from the mailout
+                    mailoutComponents.Nodes.Remove(selected);
+                    mailout.sections.Remove(thisSection);
+                    mailoutPreview.Document.OpenNew(true);
+                    mailoutPreview.Document.Write(mailout.ToString());
+                }
+                else {
+                    MessageBox.Show("DELETE SECTION CAST ERROR", "RUNTIME ERROR");
+                }
             }
         }
 
         private void deleteEventStrip_Click(object sender, EventArgs e) {
-            // cast the component mapped to the node to an event and its parent to a section, if neither are null just quit
-            TreeNode selected = mailoutComponents.SelectedNode;
-            Event thisEvent = nodeToComponent[selected] as Event;
-            Section parentSection = nodeToComponent[selected.Parent] as Section;
-            if (parentSection != null && thisEvent != null) {
-                // remove the node frm the tree view and the corresponding event from the section it belongs to
-                mailoutComponents.Nodes.Remove(selected);
-                parentSection.events.Remove(thisEvent);
-                mailoutPreview.Document.OpenNew(true);
-                mailoutPreview.Document.Write(mailout.ToString());
+            if (MessageBox.Show("Are you sure?", "Confirm Deletion", MessageBoxButtons.OKCancel) == DialogResult.OK) {
+                // cast the component mapped to the node to an event and its parent to a section, if neither are null just quit
+                TreeNode selected = mailoutComponents.SelectedNode;
+                Event thisEvent = nodeToComponent[selected] as Event;
+                Section parentSection = nodeToComponent[selected.Parent] as Section;
+                if (parentSection != null && thisEvent != null) {
+                    // remove the node frm the tree view and the corresponding event from the section it belongs to
+                    mailoutComponents.Nodes.Remove(selected);
+                    parentSection.events.Remove(thisEvent);
+                    mailoutPreview.Document.OpenNew(true);
+                    mailoutPreview.Document.Write(mailout.ToString());
+                }
+                else {
+                    MessageBox.Show("DELETE EVENT CAST ERROR", "RUNTIME ERROR");
+                }
             }
-            else {
-                MessageBox.Show("DELETE EVENT CAST ERROR", "RUNTIME ERROR");
-            }
-
         }
 
         private void blankMailoutToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -317,6 +320,68 @@ namespace MailoutMaker {
 
             mailoutPreview.Document.OpenNew(true);
             mailoutPreview.Document.Write(mailout.ToString());
+        }
+
+        private void moveUpToolStripMenuItem1_Click(object sender, EventArgs e) {
+            // cast the component mapped to the node to an event and its parent to a section, if neither are null just quit
+            TreeNode selected = mailoutComponents.SelectedNode;
+            Event thisEvent = nodeToComponent[selected] as Event;
+
+            TreeNode parentNode = selected.Parent;
+            Section parentSection = nodeToComponent[selected.Parent] as Section;
+
+            if (thisEvent != null && parentSection != null) {
+                // move event up or wrap it around
+                int currIndex = parentSection.events.IndexOf(thisEvent);
+                parentSection.events.Remove(thisEvent);
+                mailoutComponents.Nodes.Remove(selected);
+
+                if (currIndex == 0) {
+                    parentNode.Nodes.Add(selected);
+                    parentSection.events.Add(thisEvent);
+                }
+                else {
+                    parentSection.events.Insert(currIndex - 1, thisEvent);
+                    parentNode.Nodes.Insert(currIndex - 1, selected);
+                }
+
+                mailoutPreview.Document.OpenNew(true);
+                mailoutPreview.Document.Write(mailout.ToString());
+            }
+            else {
+                MessageBox.Show("MOVE EVENT CAST ERROR", "RUNTIME ERROR");
+            }
+        }
+
+        private void moveDownToolStripMenuItem1_Click(object sender, EventArgs e) {
+            // cast the component mapped to the node to an event and its parent to a section, if neither are null just quit
+            TreeNode selected = mailoutComponents.SelectedNode;
+            Event thisEvent = nodeToComponent[selected] as Event;
+
+            TreeNode parentNode = selected.Parent;
+            Section parentSection = nodeToComponent[selected.Parent] as Section;
+
+            if (thisEvent != null && parentSection != null) {
+                // move event up or wrap it around
+                int currIndex = parentSection.events.IndexOf(thisEvent);
+                parentSection.events.Remove(thisEvent);
+                mailoutComponents.Nodes.Remove(selected);
+
+                if (currIndex == 0) {
+                    parentNode.Nodes.Add(selected);
+                    parentSection.events.Add(thisEvent);
+                }
+                else {
+                    parentSection.events.Insert(currIndex + 1, thisEvent);
+                    parentNode.Nodes.Insert(currIndex + 1, selected);
+                }
+
+                mailoutPreview.Document.OpenNew(true);
+                mailoutPreview.Document.Write(mailout.ToString());
+            }
+            else {
+                MessageBox.Show("MOVE EVENT CAST ERROR", "RUNTIME ERROR");
+            }
         }
     }
 }
