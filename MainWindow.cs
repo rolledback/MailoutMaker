@@ -322,7 +322,7 @@ namespace MailoutMaker {
             mailoutPreview.Document.Write(mailout.ToString());
         }
 
-        private void moveUpToolStripMenuItem1_Click(object sender, EventArgs e) {
+        private void moveSectionUpToolStripMenuItem1_Click(object sender, EventArgs e) {
             // cast the component mapped to the node to an event and its parent to a section, if neither are null just quit
             TreeNode selected = mailoutComponents.SelectedNode;
             Event thisEvent = nodeToComponent[selected] as Event;
@@ -353,7 +353,7 @@ namespace MailoutMaker {
             }
         }
 
-        private void moveDownToolStripMenuItem1_Click(object sender, EventArgs e) {
+        private void moveSectionDownToolStripMenuItem1_Click(object sender, EventArgs e) {
             // cast the component mapped to the node to an event and its parent to a section, if neither are null just quit
             TreeNode selected = mailoutComponents.SelectedNode;
             Event thisEvent = nodeToComponent[selected] as Event;

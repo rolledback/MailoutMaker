@@ -283,14 +283,14 @@
             this.moveUpToolStripMenuItem1.Name = "moveUpToolStripMenuItem1";
             this.moveUpToolStripMenuItem1.Size = new System.Drawing.Size(157, 22);
             this.moveUpToolStripMenuItem1.Text = "Move Up";
-            this.moveUpToolStripMenuItem1.Click += new System.EventHandler(this.moveUpToolStripMenuItem1_Click);
+            this.moveUpToolStripMenuItem1.Click += new System.EventHandler(this.moveSectionUpToolStripMenuItem1_Click);
             // 
             // moveDownToolStripMenuItem1
             // 
             this.moveDownToolStripMenuItem1.Name = "moveDownToolStripMenuItem1";
             this.moveDownToolStripMenuItem1.Size = new System.Drawing.Size(157, 22);
             this.moveDownToolStripMenuItem1.Text = "Move Down";
-            this.moveDownToolStripMenuItem1.Click += new System.EventHandler(this.moveDownToolStripMenuItem1_Click);
+            this.moveDownToolStripMenuItem1.Click += new System.EventHandler(this.moveSectionDownToolStripMenuItem1_Click);
             // 
             // changeSectionToolStripMenuItem
             // 
